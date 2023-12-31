@@ -1,0 +1,464 @@
+@import url('https://fonts.googleapis.com/css2?family=Dai+Banna+SIL&display=swap');
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 20px;
+	padding: 0;
+    font-family: 'Dai Banna SIL', serif;
+    background-image: linear-gradient(-225deg, #feffff 0%, #d1fce6 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+	box-sizing: border-box;
+}
+
+h1 {
+    font-size: bold;
+    font-size: 3.6rem;
+    color: #0da575;
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+input[type=file] {
+    width: 100%;
+    max-width: 280px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type=file]::file-selector-button {
+    margin: 10px;
+    margin-left: 0;
+    border: none;
+    background: #084cdf;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #0d45a5;
+}
+
+select {
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 5px;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 280px;
+    border-radius: 5px;
+    border: 2px solid #084cdf;
+    transition: border 0.3s;
+    font-family: inherit;
+    outline: none;
+    display: none;
+}
+
+select:focus,
+select:hover {
+    border-color: #0d45a5;
+}
+
+.upload-btn {
+    cursor: pointer;
+    box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border: 1px solid #0da575;
+    background-color: #0da575;
+    border-radius: 30px;
+    padding: 10px 35px;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+    font-family: inherit;
+}
+
+.upload-btn:hover {
+    box-shadow: 5px 8px 25px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1) translateY(-5px);
+}
+
+.drop-container {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    max-width: 450px;
+    padding: 20px 10px;
+    border-radius: 10px;
+    border: 2px dashed #0da575;
+    cursor: pointer;
+    transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.drop-container:hover {
+    background: #f6fef9;
+    border-color: #036d4c;
+}
+
+.drop-container:hover .drop-title {
+    color: #222;
+}
+
+.drop-title {
+    color: #444;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    transition: color .2s ease-in-out;
+    font-family: inherit;
+}
+
+.drop-container.drag-active {
+    background: #eee;
+    border-color: #111;
+}
+
+.drop-container.drag-active .drop-title {
+    color: #0da575;
+}
+
+.result {
+    display: none;
+    margin-top: 50px;
+    padding: 10px;
+	width: 100%;
+    max-width: 650px;
+}
+
+.code-container {
+    border: 2px solid black;
+    background-color: #222;
+    height: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 6px;
+    line-height: 1.2rem;
+}
+
+pre {
+    padding: 10px;
+	overflow-x: auto;
+	font-size: 1.1rem;
+	font-family: 'Courier New', Courier, monospace;
+	margin-bottom: 0px !important;
+}
+
+.code-header {
+    padding: 10px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: #333;
+	position: sticky;
+	top: 0;
+}
+
+.preloader {
+    width: 100%;
+    z-index: -1;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    background: rgb(23, 22, 22);
+    transition: opacity 0.5s linear;
+}
+
+.preloader.active {
+    z-index: 1000;
+    opacity: 0.8;    
+}
+
+:root {
+	--hue: 223;
+	--bg: hsl(var(--hue),10%,90%);
+	--fg: hsl(var(--hue),10%,10%);
+	--primary: hsl(var(--hue),90%,55%);
+	--primary-l: hsl(var(--hue),90%,65%);
+	--primary-d: hsl(var(--hue),90%,45%);
+	--white: hsl(var(--hue),10%,100%);
+	--white-d: hsl(var(--hue),10%,45%);
+	/* font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320)); */
+}
+.book,
+.book__pg-shadow,
+.book__pg {
+	animation: cover 7s ease-in-out infinite;
+}
+.book {
+	background-color: var(--primary-l);
+	border-radius: 0.25em;
+	box-shadow:
+		0 0.25em 0.5em hsla(0,0%,0%,0.3),
+		0 0 0 0.25em var(--primary) inset;
+	padding: 0.25em;
+	perspective: 37.5em;
+	position: relative;
+	width: 8em;
+	height: 6em;
+	transform: translate3d(0,0,0);
+	transform-style: preserve-3d;
+}
+.book__pg-shadow,
+.book__pg {
+	position: absolute;
+	left: 0.25em;
+	width: calc(50% - 0.25em);
+}
+.book__pg-shadow {
+	animation-name: shadow;
+	background-image: linear-gradient(-45deg,hsla(0,0%,0%,0) 50%,hsla(0,0%,0%,0.3) 50%);
+	filter: blur(0.25em);
+	top: calc(100% - 0.25em);
+	height: 3.75em;
+	transform: scaleY(0);
+	transform-origin: 100% 0%;
+}
+.book__pg {
+	animation-name: pg1;
+	background-color: var(--white);
+	background-image: linear-gradient(90deg,hsla(var(--hue),10%,90%,0) 87.5%,hsl(var(--hue),10%,90%));
+	height: calc(100% - 0.5em);
+	transform-origin: 100% 50%;
+}
+.book__pg--2,
+.book__pg--3,
+.book__pg--4 {
+	background-image:
+		repeating-linear-gradient(hsl(var(--hue),10%,10%) 0 0.125em,hsla(var(--hue),10%,10%,0) 0.125em 0.5em),
+		linear-gradient(90deg,hsla(var(--hue),10%,90%,0) 87.5%,hsl(var(--hue),10%,90%));
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 2.5em 4.125em, 100% 100%;
+}
+.book__pg--2 {
+	animation-name: pg2;
+}
+.book__pg--3 {
+	animation-name: pg3;
+}
+.book__pg--4 {
+	animation-name: pg4;
+}
+.book__pg--5 {
+	animation-name: pg5;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: hsl(var(--hue),10%,30%);
+		--fg: hsl(var(--hue),10%,90%);
+	}
+}
+
+/* Animations */
+@keyframes cover {
+	from, 5%, 45%, 55%, 95%, to {
+		animation-timing-function: ease-out;
+		background-color: var(--primary-l);
+	}
+	10%, 40%, 60%, 90% {
+		animation-timing-function: ease-in;
+		background-color: var(--primary-d);
+	}
+}
+@keyframes shadow {
+	from, 10.01%, 20.01%, 30.01%, 40.01% {
+		animation-timing-function: ease-in;
+		transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+	}
+	5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% {
+		animation-timing-function: ease-out;
+		transform: translate3d(0,0,1px) scaleY(0.2) rotateY(90deg);
+	}
+	10%, 20%, 30%, 40%, 50%, to {
+		animation-timing-function: ease-out;
+		transform: translate3d(0,0,1px) scaleY(0) rotateY(180deg);
+	}
+	50.01%, 60.01%, 70.01%, 80.01%, 90.01% {
+		animation-timing-function: ease-in;
+		transform: translate3d(0,0,1px) scaleY(0) rotateY(180deg);
+	}
+	60%, 70%, 80%, 90%, to {
+		animation-timing-function: ease-out;
+		transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+	}
+}
+@keyframes pg1 {
+	from, to {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.4deg);
+	}
+	10%, 15% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(180deg);
+	}
+	20%, 80% {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(180deg);
+	}
+	85%, 90% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(180deg);
+	}
+}
+@keyframes pg2 {
+	from, to {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(0.3deg);
+	}
+	5%, 10% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.3deg);
+	}
+	20%, 25% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.9deg);
+	}
+	30%, 70% {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(179.9deg);
+	}
+	75%, 80% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.9deg);
+	}
+	90%, 95% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.3deg);
+	}
+}
+@keyframes pg3 {
+	from, 10%, 90%, to {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(0.2deg);
+	}
+	15%, 20% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.2deg);
+	}
+	30%, 35% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.8deg);
+	}
+	40%, 60% {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(179.8deg);
+	}
+	65%, 70% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.8deg);
+	}
+	80%, 85% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.2deg);
+	}
+}
+@keyframes pg4 {
+	from, 20%, 80%, to {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(0.1deg);
+	}
+	25%, 30% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.1deg);
+	}
+	40%, 45% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.7deg);
+	}
+	50% {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(179.7deg);
+	}
+	55%, 60% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.7deg);
+	}
+	70%, 75% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0.1deg);
+	}
+}
+@keyframes pg5 {
+	from, 30%, 70%, to {
+		animation-timing-function: ease-in;
+		background-color: var(--white-d);
+		transform: translate3d(0,0,1px) rotateY(0);
+	}
+	35%, 40% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0deg);
+	}
+	50% {
+		animation-timing-function: ease-in-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(179.6deg);
+	}
+	60%, 65% {
+		animation-timing-function: ease-out;
+		background-color: var(--white);
+		transform: translate3d(0,0,1px) rotateY(0);
+	}
+}

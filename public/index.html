@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Expenso Image Parser</title>
+</head>
+
+<body>
+    <h1>Upload Payment History Image</h1>
+    <label for="file" class="drop-container" id="dropcontainer">
+        <span class="drop-title">Drop file here</span>
+        <span>or</span>
+        <input id="file" type="file" name="file" multiple required>
+        <button class="upload-btn" onclick="uploadFile()">UPLOAD</button>
+    </label>
+    <div id="result" class="result">
+        <h2>Parsed Json Result</h2>
+        <div class="code-container">
+            <div class="code-header">
+                <span class="code-title">JSON Data</span>
+                <span id="ctcb" style="cursor: pointer;" onclick="copyToClipboard()">copy</span>
+            </div>
+            <pre id='jsoncode'>
+            </pre>
+        </div>
+    </div>
+
+    <div class="preloader" id="loader">
+        <div class="book">
+            <div class="book__pg-shadow"></div>
+            <div class="book__pg"></div>
+            <div class="book__pg book__pg--2"></div>
+            <div class="book__pg book__pg--3"></div>
+            <div class="book__pg book__pg--4"></div>
+            <div class="book__pg book__pg--5"></div>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
